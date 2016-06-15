@@ -22,7 +22,10 @@ exports.handler = function (event, context, callback) {
 
     if (!event.filename) {
 	console.info('no filename provided, generating a random one.');
-	outputFilename = Math.random().toString(36).slice(2) + '.pdf';
+	outputFilename = Math.random().toString(36).slice(2);
+    }
+    else {
+	outputFilename = event.filename;
     }
 
     if (!event.pagesize) {
@@ -31,9 +34,9 @@ exports.handler = function (event, context, callback) {
     else {
 	pageSize = event.pagesize;
     }
-    console.info('using pagesize: ' = pageSize);
+    console.info('using pagesize: ' + pageSize);
 
-    var outputFilename = event.filename + '.pdf';
+    var outputFilename = outputFilename + '.pdf';
     console.info('outputFilename=' + outputFilename);
 
     var output = '/tmp/' + outputFilename;
