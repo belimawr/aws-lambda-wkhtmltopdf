@@ -8,13 +8,14 @@ var config = require('./config.js');
 var s3 = new AWS.S3();
 
 exports.handler = function (event, context, callback) {
-    if (!event.html) {
-        console.error('unable to get the html');
-        callback('unable to get the html', {});
+    if (!event.data) {
+        console.error('unable to get the data');
+        callback('unable to get the data', {});
         return
     }
 
-    console.info('event.html=' + event.html);
+    var data = new Buffer(event.data, 'base64').toString('utf8');
+    console.info('decoded data ' + data);
 
     var outputFilename = Math.random().toString(36).slice(2) + '.pdf';
     console.info('outputFilename=' + outputFilename);
@@ -22,7 +23,7 @@ exports.handler = function (event, context, callback) {
     var output = '/tmp/' + outputFilename;
     var writeStream = fs.createWriteStream(output);
 
-    wkhtmltopdf(event.html, { pageSize: 'letter' }, (err, stream) => {
+    wkhtmltopdf(data, { pageSize: 'letter' }, (err, stream) => {
         s3.putObject({
             Bucket: dstBucket,
             Key: outputFilename,
