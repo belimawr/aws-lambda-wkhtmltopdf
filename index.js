@@ -14,16 +14,32 @@ exports.handler = function (event, context, callback) {
         return
     }
 
+    var outputFilename = '';
+    var pageSize = 'a4';
+
     var data = new Buffer(event.data, 'base64').toString('utf8');
     console.info('decoded data ' + data);
 
-    var outputFilename = Math.random().toString(36).slice(2) + '.pdf';
+    if (!event.filename) {
+	console.info('no filename provided, generating a random one.');
+	outputFilename = Math.random().toString(36).slice(2) + '.pdf';
+    }
+
+    if (!event.pagesize) {
+	console.info('no pagesize provided, using A4.');
+    }
+    else {
+	pageSize = event.pagesize;
+    }
+    console.info('using pagesize: ' = pageSize);
+
+    var outputFilename = event.filename + '.pdf';
     console.info('outputFilename=' + outputFilename);
 
     var output = '/tmp/' + outputFilename;
     var writeStream = fs.createWriteStream(output);
 
-    wkhtmltopdf(data, { pageSize: 'letter' }, (err, stream) => {
+    wkhtmltopdf(data, { "pageSize": pageSize }, (err, stream) => {
         s3.putObject({
             Bucket: dstBucket,
             Key: outputFilename,

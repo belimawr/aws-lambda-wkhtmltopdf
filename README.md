@@ -5,9 +5,13 @@ Convert HTML to PDF using Webkit (QtWebKit) on AWS Lambda
 
 ```json
 {
-    "data" : "PGgxPlRlc3Q8L2gxPjxwPkhlbGxvIHdvcmxkPC9wPg=="
+    "data" : "PGgxPlRlc3Q8L2gxPjxwPkhlbGxvIHdvcmxkPC9wPg==",
+    "filename": "output",
+    "pagesize": "a4"
 }
 ```
+
+Only the ``data`` paramter is mandatory.
 
 ## Output
 
@@ -21,6 +25,13 @@ Convert HTML to PDF using Webkit (QtWebKit) on AWS Lambda
 
 1. Open `config.js` and set `dstBucket` variable to name of S3 bucket where you want function to save output PDF files.
 2. Make sure AWS Lambda function has `PutObject` access to S3 bucket
+
+## Packing/deployment
+
+1. Donwload all dependence: ``npm install``
+2. Create the package (put everything on a zip file): ``zip -r package.zip *``
+3. Create your lambda
+4. Have fun!
 
 ## Links
 
