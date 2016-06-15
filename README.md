@@ -11,7 +11,7 @@ Convert HTML to PDF using Webkit (QtWebKit) on AWS Lambda
 }
 ```
 
-Only the ``data`` paramter is mandatory.
+Only the ``data`` parameter is mandatory.
 
 ## Output
 
@@ -28,7 +28,7 @@ Only the ``data`` paramter is mandatory.
 
 ## Packing/deployment
 
-1. Donwload all dependence: ``npm install``
+1. Download all dependence: ``npm install``
 2. Create the package (put everything on a zip file): ``zip -r package.zip *``
 3. Create your lambda
 4. Have fun!
